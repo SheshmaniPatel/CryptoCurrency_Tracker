@@ -13,14 +13,49 @@ const options = {
 };
 let coins = [];
 
+// fetching and handling the data from API
+
 const fetchcoins = async () => {
   try {
     const response = await fetch(url, options);
-    coins = await response.json();
-    console.log(coins);
-    console.log(response);
+    const coins = await response.json();
+    return coins;
   } catch (error) {
     console.error(error);
   }
 };
-window.onload = fetchcoins();
+//handle favorite click section
+const handleFavClick=(coinId)={};
+
+// rendering the data on page
+
+const displayCoins = (coins) => {
+  const tableBody = document.getElementById("crypto-table-body");
+  tableBody.innerHTML = "";
+  coins.forEach((coin, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+            <td>${index+1}</td>
+            <td><img src="${coin.image}" alt="${coin.name}" width="24" height="24" /></td>
+            <td>${coin.name}</td>
+            <td>$${coin.current_price}</td>
+            <td>$${coin.total_volume}</td>
+            <td>$${coin.market_cap}</td>
+            <td><i class="fa-solid fa-star favourite-icon" data-id="${coin.id}"></i></td>
+    
+    `;
+
+    row.querySelector(".favourite-icon").addEventListener('click',(event)=>{
+        event.stopPropagation(); 
+        handleFavClick(coin.id);
+    })
+
+    tableBody.appendChild(row);
+  });
+};
+
+document.addEventListener("DOMContentLoaded", async () => {
+  coins = await fetchcoins();
+  console.log(coins);
+  displayCoins(coins);
+});
