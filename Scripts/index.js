@@ -1,5 +1,7 @@
 const url =
   "https://coingecko.p.rapidapi.com/coins/markets?page=1&vs_currency=usd&per_page=100&order=market_cap_desc";
+//  const tempurl =
+//   "https://api.coingecko.com/api/v3/coins/markets?page=1&vs_currency=usd&per_page=100&order=market_cap_desc";
 
 const options = {
   method: "GET",
