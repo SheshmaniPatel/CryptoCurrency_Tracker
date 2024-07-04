@@ -74,29 +74,44 @@ tr:hover {
 
 /* Adding shimmer effect */
 
-.shimmer-container{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255,255.255.0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: none; /*Hidden before triggred*/
+.shimmer-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255.255.0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none; /*Hidden before triggred*/
 }
-.shimmer{
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: conic-gradient(#0000 10%,gold);
-    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% -9px),#000 0);
-    animation: spin 1s infinite linear;
+.shimmer {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: conic-gradient(#0000 10%, gold);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% -9px), #000 0);
+  animation: spin 1s infinite linear;
 }
 
 @keyframes spin {
-   to{
+  to {
     transform: rotate(1turn);
-   } 
+  }
+}
+.page-btn {
+  padding: 5px 10px;
+  margin: 10px 5px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #ccc;
+}
+.page-btn:hover {
+  background-color: #2dd735;
+  color: rgb(239, 236, 236);
+}
+.page-btn.active{
+  background-color: #2a9630;
+  color: rgb(239, 236, 236);
 }
