@@ -1,14 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-</head>
-<body>
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
 
+    <script
+      src="https://kit.fontawesome.com/9ae174cfae.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Crypto_Tracker</title>
+  </head>
+  <body>
+    <nav>
+      <div class="left-nav">
+        <a href="index.html" class="title">Crypto Tarcker</a>
+      </div>
+      <div class="right-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="favourites.html" class="nav-link">Liked Coins</a>
+        <div class="search-container">
+          <span class="search-icon"
+            ><i class="fa-solid fa-magnifying-glass" +></i
+          ></span>
+          <input type="text" id="search-box" placeholder="Search..." />
+        </div>
+      </div>
+    </nav>
+    <main>
+      <table id="crypto-table">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Icon</th>
+            <th>Name</th>
+            <th>
+              Price
+              <i id="sort-price-asc" class="fa-solid fa-arrow-up"></i>
+              <i id="sort-price-desc" class="fa-solid fa-arrow-down"></i>
+            </th>
+            <th>
+              Volume
+              <i id="sort-volume-asc" class="fa-solid fa-arrow-up"></i>
+              <i id="sort-volume-desc" class="fa-solid fa-arrow-down"></i>
+            </th>
+            <th>Market Cap</th>
+            <th>favourites</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="pegination"></div>
+      <div class="shimmer-container">
+        <div class="shimmer"></div>
+      </div>
+    </main>
     <script src="./Scripts/index.js"></script>
-</body>
+  </body>
 </html>
