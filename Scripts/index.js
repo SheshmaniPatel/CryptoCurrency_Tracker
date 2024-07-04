@@ -1,3 +1,6 @@
+const tableBody = document.getElementById("crypto-table-body");
+const shimmerContainer=document.querySelector(".shimmer-container");
+
 const url =
   "https://coingecko.p.rapidapi.com/coins/markets?page=1&vs_currency=usd&per_page=100&order=market_cap_desc";
 //  const tempurl =
@@ -24,14 +27,22 @@ const fetchcoins = async () => {
     console.error(error);
   }
 };
+
+// Show Shimmer effect
+const showShimmer=()=>{
+   shimmerContainer.style.display="flex";
+}
+// Hide Shimmer effect
+const hideShimmer=()=>{
+   shimmerContainer.style.display="none";
+}
+
 //handle favorite click section
 const handleFavClick=(coinId)={};
 
 // rendering the data on page
-
 const displayCoins = (coins) => {
-  const tableBody = document.getElementById("crypto-table-body");
-  tableBody.innerHTML = "";
+    tableBody.innerHTML = "";
   coins.forEach((coin, index) => {
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -55,7 +66,15 @@ const displayCoins = (coins) => {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  coins = await fetchcoins();
-  console.log(coins);
-  displayCoins(coins);
+
+    try {
+        showShimmer();
+        coins = await fetchcoins();
+        displayCoins(coins);
+        hideShimmer();
+    } catch (error) {
+        console.log(error);
+        hideShimmer();
+    }
+     
 });
