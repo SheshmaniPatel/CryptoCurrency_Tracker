@@ -1,6 +1,10 @@
 const tableBody = document.getElementById("crypto-table-body");
 const shimmerContainer = document.querySelector(".shimmer-container");
 const peginationContainer = document.querySelector(".pegination");
+const sortPriceAsc = document.getElementById("sort-price-asc");
+const sortPriceDesc = document.getElementById("sort-price-desc");
+const sortVolumeAsc = document.getElementById("sort-volume-asc");
+const sortVolumeDesc = document.getElementById("sort-volume-desc");
 
 const url =
   "https://coingecko.p.rapidapi.com/coins/markets?page=1&vs_currency=usd&per_page=100&order=market_cap_desc";
@@ -69,6 +73,44 @@ const handleFavClick = (coinId) => {
   displayCoins(getCoinsToDisplay(coins, currentPage), currentPage);
 };
 
+//*Sorting */
+//Sorting by price
+const sortCoinsByPrice = (order) => {
+  if (order === "asc") {
+    coins.sort((a, b) => a.current_price - b.current_price);
+  } else if (order === "desc") {
+    coins.sort((a, b) => b.current_price - a.current_price);
+  }
+  currentPage = 1;
+  displayCoins(getCoinsToDisplay(coins, currentPage), currentPage);
+  renderPegination(coins);
+};
+//adding eventlistners on icon of price
+sortPriceAsc.addEventListener("click", () => {
+  sortCoinsByPrice("asc");
+});
+sortPriceDesc.addEventListener("click", () => {
+  sortCoinsByPrice("desc");
+});
+//Sorting by Volume
+const sortCoinsByVolume = (order) => {
+  if (order === "asc") {
+    coins.sort((a, b) => a.total_volume - b.total_volume);
+  } else if (order === "desc") {
+    coins.sort((a, b) => b.total_volume - a.total_volume);
+  }
+  currentPage = 1;
+  displayCoins(getCoinsToDisplay(coins, currentPage), currentPage);
+  renderPegination(coins);
+};
+//adding eventlistners on icon of price
+sortVolumeAsc.addEventListener("click", () => {
+  sortCoinsByVolume("asc");
+});
+sortVolumeDesc.addEventListener("click", () => {
+  sortCoinsByVolume("desc");
+});
+
 // rendering the data on page
 const displayCoins = (coins, currentPage) => {
   const startIndex = (currentPage - 1) * coinsPerPage + 1;
@@ -83,9 +125,9 @@ const displayCoins = (coins, currentPage) => {
       coin.name
     }" width="24" height="24" /></td>
             <td>${coin.name}</td>
-            <td>$${coin.current_price}</td>
-            <td>$${coin.total_volume}</td>
-            <td>$${coin.market_cap}</td>
+            <td>$${coin.current_price.toLocaleString()}</td>
+            <td>$${coin.total_volume.toLocaleString()}</td>
+            <td>$${coin.market_cap.toLocaleString()}</td>
             <td><i class="fas fa-star favourite-icon ${
               isFavourite ? "favourite" : ""
             } " data-id="${coin.id}"></i></td>
@@ -125,7 +167,7 @@ const renderPegination = (coins) => {
   }
 };
 
-//Updating btn
+//Updating pagination btn
 const updatePeginationBtn = () => {
   const pageBtns = document.querySelectorAll(".page-btn");
   pageBtns.forEach((button, index) => {

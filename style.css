@@ -51,6 +51,7 @@ main {
   align-items: center;
   position: relative;
   margin-top: 100px;
+  
 }
 table {
   width: 95%;
@@ -66,6 +67,7 @@ td {
 }
 th {
   background-color: #f4f4f4;
+  
 }
 tr:hover {
   background-color: #f1f1f1;
@@ -121,6 +123,6 @@ tr:hover {
 .favourite-icon{
   cursor: pointer;
 }
-.favourite-icon:hover,.favourite{
+ .favourite{
   color: gold;
 }
