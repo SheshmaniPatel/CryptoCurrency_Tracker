@@ -100,6 +100,8 @@ tr:hover {
     transform: rotate(1turn);
   }
 }
+
+/* pegination styleing */
 .page-btn {
   padding: 5px 10px;
   margin: 10px 5px;
@@ -114,4 +116,11 @@ tr:hover {
 .page-btn.active{
   background-color: #2a9630;
   color: rgb(239, 236, 236);
+}
+/* Styling for the favourites  */
+.favourite-icon{
+  cursor: pointer;
+}
+.favourite-icon:hover,.favourite{
+  color: gold;
 }

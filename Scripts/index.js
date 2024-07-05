@@ -4,7 +4,6 @@ const peginationContainer = document.querySelector(".pegination");
 
 const url =
   "https://coingecko.p.rapidapi.com/coins/markets?page=1&vs_currency=usd&per_page=100&order=market_cap_desc";
- 
 
 const options = {
   method: "GET",
@@ -47,24 +46,49 @@ const getCoinsToDisplay = (coins, page) => {
 };
 
 //handle favorite click section
-const handleFavClick = (coinId = {});
+//**Fetching favourites coins id from localStorage*/
+const fetchFavouriteCoins = () => {
+  return JSON.parse(localStorage.getItem("favourites")) || [];
+};
+
+//**Saving favourites coinsId to local storage */
+const saveFavouriteCoins = (favourites) => {
+  localStorage.setItem("favourites", JSON.stringify(favourites));
+};
+
+const handleFavClick = (coinId) => {
+  let favourites = fetchFavouriteCoins();
+  //checking if it is already present
+  if (favourites.includes(coinId)) {
+    favourites = favourites.filter((id) => id !== coinId);
+  } else {
+    favourites.push(coinId);
+  }
+
+  saveFavouriteCoins(favourites);
+  displayCoins(getCoinsToDisplay(coins, currentPage), currentPage);
+};
 
 // rendering the data on page
-const displayCoins = (coins,currentPage) => {
-    const startIndex=(currentPage-1)*coinsPerPage+1;
+const displayCoins = (coins, currentPage) => {
+  const startIndex = (currentPage - 1) * coinsPerPage + 1;
+  const favourites = fetchFavouriteCoins();
   tableBody.innerHTML = "";
   coins.forEach((coin, index) => {
     const row = document.createElement("tr");
+    const isFavourite = favourites.includes(coin.id);
     row.innerHTML = `
-            <td>${startIndex+index}</td>
-            <td><img src="${coin.image}" alt="${coin.name}" width="24" height="24" /></td>
+            <td>${startIndex + index}</td>
+            <td><img src="${coin.image}" alt="${
+      coin.name
+    }" width="24" height="24" /></td>
             <td>${coin.name}</td>
             <td>$${coin.current_price}</td>
             <td>$${coin.total_volume}</td>
             <td>$${coin.market_cap}</td>
-            <td><i class="fa-solid fa-star favourite-icon" data-id="${
-              coin.id
-            }"></i></td>
+            <td><i class="fas fa-star favourite-icon ${
+              isFavourite ? "favourite" : ""
+            } " data-id="${coin.id}"></i></td>
     
     `;
 
@@ -93,7 +117,7 @@ const renderPegination = (coins) => {
     //Allow click event on btn
     pageBtn.addEventListener("click", () => {
       currentPage = i;
-      displayCoins(getCoinsToDisplay(coins, currentPage),currentPage);
+      displayCoins(getCoinsToDisplay(coins, currentPage), currentPage);
       updatePeginationBtn();
     });
 
@@ -117,7 +141,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     showShimmer();
     coins = await fetchcoins();
-    displayCoins(getCoinsToDisplay(coins, currentPage),currentPage);
+    displayCoins(getCoinsToDisplay(coins, currentPage), currentPage);
     renderPegination(coins);
     hideShimmer();
   } catch (error) {
