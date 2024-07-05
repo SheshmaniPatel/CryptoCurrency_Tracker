@@ -5,6 +5,7 @@ const sortPriceAsc = document.getElementById("sort-price-asc");
 const sortPriceDesc = document.getElementById("sort-price-desc");
 const sortVolumeAsc = document.getElementById("sort-volume-asc");
 const sortVolumeDesc = document.getElementById("sort-volume-desc");
+const searchCoin = document.getElementById("search-box");
 
 const url =
   "https://coingecko.p.rapidapi.com/coins/markets?page=1&vs_currency=usd&per_page=100&order=market_cap_desc";
@@ -73,7 +74,7 @@ const handleFavClick = (coinId) => {
   displayCoins(getCoinsToDisplay(coins, currentPage), currentPage);
 };
 
-//*Sorting */
+//****************Handle Sorting ****************/
 //Sorting by price
 const sortCoinsByPrice = (order) => {
   if (order === "asc") {
@@ -85,13 +86,16 @@ const sortCoinsByPrice = (order) => {
   displayCoins(getCoinsToDisplay(coins, currentPage), currentPage);
   renderPegination(coins);
 };
+
 //adding eventlistners on icon of price
 sortPriceAsc.addEventListener("click", () => {
   sortCoinsByPrice("asc");
 });
+
 sortPriceDesc.addEventListener("click", () => {
   sortCoinsByPrice("desc");
 });
+
 //Sorting by Volume
 const sortCoinsByVolume = (order) => {
   if (order === "asc") {
@@ -103,13 +107,28 @@ const sortCoinsByVolume = (order) => {
   displayCoins(getCoinsToDisplay(coins, currentPage), currentPage);
   renderPegination(coins);
 };
+
 //adding eventlistners on icon of price
 sortVolumeAsc.addEventListener("click", () => {
   sortCoinsByVolume("asc");
 });
+
 sortVolumeDesc.addEventListener("click", () => {
   sortCoinsByVolume("desc");
 });
+
+//****************Handle Search ****************/
+const handleSearch = () => {
+  const searchQuery = searchCoin.value.trim();
+  const filteredCoins = coins.filter((coin) =>
+    coin.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  currentPage = 1;
+  displayCoins(getCoinsToDisplay(filteredCoins, currentPage), currentPage);
+  renderPegination(filteredCoins);
+};
+
+searchCoin.addEventListener("input", handleSearch);
 
 // rendering the data on page
 const displayCoins = (coins, currentPage) => {
