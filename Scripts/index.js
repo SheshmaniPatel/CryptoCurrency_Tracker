@@ -8,7 +8,7 @@ const sortVolumeDesc = document.getElementById("sort-volume-desc");
 const searchCoin = document.getElementById("search-box");
 
 const url =
-  "https://coingecko.p.rapidapi.com/coins/markets?page=1&vs_currency=usd&per_page=100&order=market_cap_desc";
+  "https://api.coingecko.com/api/v3/coins/markets?page=1&vs_currency=usd&per_page=100&order=market_cap_desc";
 
 const options = {
   method: "GET",
@@ -127,7 +127,7 @@ const handleSearch = () => {
   displayCoins(getCoinsToDisplay(filteredCoins, currentPage), currentPage);
   renderPegination(filteredCoins);
 };
-
+ // adding EventListner to searchbox
 searchCoin.addEventListener("input", handleSearch);
 
 // rendering the data on page
@@ -152,6 +152,10 @@ const displayCoins = (coins, currentPage) => {
             } " data-id="${coin.id}"></i></td>
     
     `;
+
+    row.addEventListener("click",()=>{
+      window.open(`coin/coins.html?id=${coin.id}`,"_blank")
+    })
 
     row.querySelector(".favourite-icon").addEventListener("click", (event) => {
       event.stopPropagation();
